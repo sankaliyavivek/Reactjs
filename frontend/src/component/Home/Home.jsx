@@ -342,7 +342,7 @@ function Home() {
 
     };
 
-
+ 
     const handleRemoveAssignedUser = async (projectId, userId) => {
         if(userRole !== 'admin'){
             alert('You are not authorized to remove users to this project');
