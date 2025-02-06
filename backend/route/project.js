@@ -1,5 +1,3 @@
-
-
 // routes/project.js
 const express = require('express');
 const ProjectSchema = require('../model/project');
@@ -94,34 +92,6 @@ router.delete('/delete/:id', async (req, res) => {
     }
 });
 
-// Assign users to a project
-// router.put('/assign-users/:projectId', Authentication, async (req, res) => {
-//     try {
-//         const { projectId } = req.params;
-//         const { userIds } = req.body;  // Array of user IDs to assign
-
-//         // Validate that the user IDs exist
-//         const users = await User.find({ '_id': { $in: userIds } });
-//         if (users.length !== userIds.length) {
-//             return res.status(404).json({ message: 'Some users not found' });
-//         }
-
-//         // Find the project by ID
-//         const project = await ProjectSchema.findById(projectId);
-//         if (!project) {
-//             return res.status(404).json({ message: 'Project not found' });
-//         }
-
-//         // Add users to the assignedTeam array (if not already assigned)
-//         project.assignedTeam = [...new Set([...project.assignedTeam, ...userIds])];  // Avoid duplicates
-//         await project.save();
-
-//         res.json({ message: 'Users assigned to project successfully', project });
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).json({ message: 'Error assigning users to project' });
-//     }
-// });
 
 
 

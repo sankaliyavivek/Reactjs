@@ -19,26 +19,6 @@ const checkAdminLimit = async (req, res, next) => {
     }
 };
 
-
-// const Authentication = async(req,res,next)=>{
-//     try{    
-//         // console.log(req.cookies)
-//         const token = req.cookies.token
-//             // console.log(token)
-//         if(!token){
-//             return res.status(401).json({error:"Please login first"})
-//         }
-//         const decoded = jwt.verify(token,'mysecretkey');
-//         next()
-//     }
-
-//     catch(error){
-//         console.log(error);
-//         }
-// }
-
-
-
 const Authentication = async (req, res, next) => {
     try {
         const token = req.cookies.token || req.headers.authorization?.split(" ")[1]; // Support Authorization Header

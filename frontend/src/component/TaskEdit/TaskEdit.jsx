@@ -6,12 +6,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 function TaskEdit() {
     const { id } = useParams();
     const navigate = useNavigate();
-
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [status, setStatus] = useState('');
-    // const [date, setDate] = useState('');
     const [priority, setPriority] = useState('');
+    const [projectId, setProjectId] = useState('');
     const [error, setError] = useState(null);
 
     useEffect(() => {
@@ -21,6 +20,7 @@ function TaskEdit() {
                 setDescription(response.data.data.description);
                 setStatus(response.data.data.status);
                 setPriority(response.data.data.priority);
+                setProjectId(response.data.data.projectId);
                 // console.log(response.data)
             })
             .catch(error => {
@@ -36,7 +36,8 @@ function TaskEdit() {
                 title,
                 description,
                 status,
-                priority
+                priority,
+                projectId: projectId, 
             });
             alert("Task updated successfully");
             navigate('/alltask');

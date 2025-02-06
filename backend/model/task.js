@@ -20,9 +20,9 @@ const TaskSchema = new mongoose.Schema({
     enum: ['Low', 'Medium', 'High'],
     default: 'Medium'
   },
-  projectId: mongoose.Schema.Types.ObjectId,
+  projectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Project', required: false },
   
-  assigneeId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, 
+  assigneeId:[ { type: mongoose.Schema.Types.ObjectId, ref: 'User' }], 
 }, { timestamps: true });
 
 module.exports = mongoose.model('Task', TaskSchema);

@@ -45,15 +45,12 @@ function Navbar() {
                     Home
                </Link>
               </li>
-
               <li>
 
                 <Link to={'/alltask'} className='none nav-link'>
-                  {/* <a className="nav-link active" aria-current="page" > */}
                     All Task
                </Link>
               </li>
-
               {
                 role === 'admin' && (
                   <li className="nav-item">
@@ -63,7 +60,6 @@ function Navbar() {
                 </li>
                 )
               }
-
               {name ? (
                 <>
                   <li className='bg-info btn none' onClick={handellogout}>
@@ -75,9 +71,6 @@ function Navbar() {
                   <li className='nav-item d-flex justify-content-center align-items-center'>
                     <span>{name}</span>
                   </li>
-
-
-
                 </>
               ) : (
                 <>
@@ -91,17 +84,12 @@ function Navbar() {
                         Login
                     </Link>
                   </li>
-
-
                 </>
               )}
-              
             </ul>
-
           </div>
         </div>
       </nav>
-
     </div>
   )
 }

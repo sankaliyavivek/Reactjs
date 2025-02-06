@@ -56,7 +56,6 @@
         }
     });
 
-
     router.post('/logout', (req, res) => {
         try {
             res.cookie("token", "", {
@@ -72,8 +71,6 @@
             res.status(500).json({ message: 'Internal server error' });
         }
     });
-
-
 
     router.get('/users', Authentication, async (req, res) => {
         try {
@@ -104,8 +101,6 @@
             res.status(500).json({ message: 'Internal server error' });
         }
     });
-
-
     router.delete('/deleteuser/:id',Authentication,checkAdminRole,async(req,res)=>{
             try {
                 // const userId=req.params.id;
@@ -130,14 +125,9 @@
                 name,
                 email,
                 phone
-                
             }, {new:true})
-            
-    
             // Save the updated user
             await update.save();
-
-    
             res.json({ message: 'User details updated successfully', update });
         } catch (error) {
             console.error(error);
@@ -172,6 +162,8 @@
 
     const { getIO } = require('../socket'); // Import the Socket.IO instance
 
+    const Notification = require('../model/notification'); // Assuming you have this model
+
     router.put('/assignuser/:projectId', Authentication, checkAdminRole, async (req, res) => {
         try {
             const { projectId } = req.params;
@@ -194,6 +186,15 @@
             project.assignedTeam = [...new Set([...project.assignedTeam, ...userIds])];
             await project.save();
     
+            // Save notification in the backend
+            const notification = new Notification({
+                message: `Users assigned to project "${project.title}"`,
+                type:'project',
+                projectId: project._id,
+                userIds: userIds,
+            });
+            await notification.save();
+    
             // Emit a Socket.IO event for user assignment
             const io = getIO();
             io.emit('userAssigned', {
@@ -208,7 +209,7 @@
             console.error(error);
             res.status(500).json({ message: 'Error assigning users to the project' });
         }
-    });
+    });  
     
     router.delete('/removeuser/:projectId/:userId', Authentication, checkAdminRole, async (req, res) => {
         try {
@@ -221,6 +222,15 @@
     
             project.assignedTeam = project.assignedTeam.filter(id => id.toString() !== userId);
             await project.save();
+    
+            // Save notification in the backend
+            const notification = new Notification({
+                message: `User removed from project "${project.title}"`,
+                type: 'project',
+                projectId: project._id,
+                userIds: [userId],
+            });
+            await notification.save();
     
             // Emit a Socket.IO event for user removal
             const io = getIO();
@@ -237,5 +247,6 @@
             res.status(500).json({ message: 'Server error' });
         }
     });
+    
     
     module.exports = router;
